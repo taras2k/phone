@@ -1,4 +1,4 @@
-module Lib where
+module Phone where
 
 import           Data.Char  (isLetter, isUpper, toLower, toUpper)
 import           Data.List  (elemIndex, elemIndices, find, nub, sortBy)
@@ -41,10 +41,16 @@ type Digit = Char
 type Presses = Int
 
 -- | reverseTaps
--- >>> reverseTaps 'F' 
+-- >>> reverseTaps 'F'
 -- [('*',1),('3',3)]
--- >>> reverseTaps '*' 
+-- >>> reverseTaps '*'
 -- [('*',2)]
+-- >>> reverseTaps 'c'
+--[('2',3)]
+-- >>> reverseTaps 'a'
+-- [('2',1)]
+-- >>> reverseTaps 'A'
+-- [('*',1),('2',1)]
 reverseTaps :: Char -> [(Digit, Presses)]
 reverseTaps d =
   if isUpper d
@@ -60,9 +66,12 @@ reverseTaps d =
     (Just chrIndex) = elemIndex (toUpper d) (snd cell)
     low = [(fst cell, succ chrIndex)]
 
--- assuming the default phone definition
--- 'a' -> [('2', 1)]
--- 'A' -> [('*', 1), ('2', 1)]
+
+-- | fingerTaps
+-- >>> fingerTaps [('*', 1), ('2', 1)]
+-- 2
+-- >>> fingerTaps [('*',1),('3',3),('*',2),('*', 1), ('2', 1)]
+-- 8
 fingerTaps :: [(Digit, Presses)] -> Presses
 fingerTaps dp = sum (map snd dp)
 
@@ -81,7 +90,7 @@ symbolCostInSentence sent c = (loC, totalCost)
     totalCost = cost upC + cost loC
 
 -- | mostPopularLetter
--- >>> mostPopularLetter "foo bar baz" 
+-- >>> mostPopularLetter "foo bar baz"
 -- ('o',6)
 mostPopularLetter :: String -> (Char, Presses)
 mostPopularLetter msg =
@@ -118,6 +127,8 @@ coolWords messages =
     wordList = filterNonLetters (concatMap words messages)
     arr = zipWith (\x y -> (toLowerStr x, y)) wordList (map wordCost wordList)
 
+-- | coolestWord convo
+-- "lol"
 coolestWord :: [String] -> String
 coolestWord []       = ""
 coolestWord messages = fst (head (coolWords messages))
@@ -128,5 +139,3 @@ sortBtnUsagesInText messages =
   where
     mrg y x = (x, foldr ((+) . snd) 0 (filter ((== x) . fst) y))
     lst = cellPhonesDead (concat messages)
-
-

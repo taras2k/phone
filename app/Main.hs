@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import           Phone
 
 main :: IO ()
 main = do
