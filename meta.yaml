@@ -2,6 +2,7 @@ apiVersion: v2
 name: editor-intellij
 version: 1.0.0
 type: Che Editor
+publisher: taras2k
 displayName: IdeaIC2019.3 IDE
 title: Intellij 2019.3 IDE
 description: Intellij IDE for Eclipse Che
