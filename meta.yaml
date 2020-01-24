@@ -20,7 +20,7 @@ spec:
         discoverable: false
     containers:
     - name: intellij-ide
-      image: localhost/idea:2
+      image: localhost:5000/idea
       volumes:
         - mountPath: "/projects"
           name: projects
