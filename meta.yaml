@@ -28,4 +28,4 @@ spec:
           name: IdeaIC2019
       ports:
           - exposedPort: 6080
-      memoryLimit: "1536M"
+      memoryLimit: "2536M"
